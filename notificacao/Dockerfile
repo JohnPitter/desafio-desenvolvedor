@@ -18,10 +18,10 @@ FROM amazoncorretto:17
 WORKDIR /app
 
 # Copy the JAR file from the build stage into the runtime stage
-COPY --from=build /app/target/api-1.0.0.jar /app/api.jar
+COPY --from=build /app/target/notificacao-1.0.0.jar /app/notificacao.jar
 
 # Make port 8080 available to the world outside this container
 EXPOSE 8080
 
 # Run the JAR file
-ENTRYPOINT ["java", "-jar", "/app/api.jar"]
+ENTRYPOINT ["java", "-jar", "/app/notificacao.jar"]

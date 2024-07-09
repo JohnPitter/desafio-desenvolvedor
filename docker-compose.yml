@@ -5,11 +5,33 @@ services:
     build: ./api
     container_name: marketplace-service
     ports:
-      - "8082:8080"
+      - "8081:8080"
     depends_on:
       - database
+
+  marketplace-checkout:
+    build: ./checkout
+    container_name: checkout-service
+    ports:
+      - "8082:8080"
+    depends_on:
       - redis
       - kafka
+
+  marketplace-processamento:
+    build: ./processamento
+    container_name: processamento-service
+    ports:
+      - "8083:8080"
+    depends_on:
+      - database
+      - kafka
+
+  marketplace-notificacao:
+    build: ./notificacao
+    container_name: notificacao-service
+    ports:
+      - "8084:8080"
 
   database:
     image: mcr.microsoft.com/mssql/server:2019-latest
@@ -47,3 +69,16 @@ services:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+  
+  websphere:
+    build:
+      context: ./websphere
+    container_name: websphere
+    ports:
+      - "9080:9080"
+      - "9443:9443"
+    environment:
+      LICENSE: accept
+      JVM_ARGS: "-Xms256m -Xmx1024m"
+    volumes:
+      - ./websphere/config/server.xml:/config/server.xml

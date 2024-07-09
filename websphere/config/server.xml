@@ -1,0 +1,52 @@
+<server description="Default Server">
+    
+    <!-- Nome do servidor -->
+    <featureManager>
+        <feature>jsp-2.3</feature>
+        <feature>localConnector-1.0</feature>
+        <feature>servlet-3.1</feature>
+        <feature>ssl-1.0</feature>
+        <feature>jndi-1.0</feature>
+        <feature>jdbc-4.1</feature>
+        <feature>adminCenter-1.0</feature>
+        <feature>appSecurity-2.0</feature>
+    </featureManager>
+
+    <!-- Porta HTTP/HTTPS -->
+    <httpEndpoint id="defaultHttpEndpoint" host="*" httpPort="9080" httpsPort="9443"/>
+    
+    <!-- Configuração SSL -->
+    <keyStore id="defaultKeyStore" password="changeit"/>
+
+    <!-- Aplicações -->
+    <applicationManager autoExpand="true"/>
+    <webApplication id="marketplace-service" location="marketplace-service.war" contextRoot="/marketplace-service"/>
+    <webApplication id="marketplace-checkout" location="marketplace-checkout.war" contextRoot="/marketplace-checkout"/>
+    <webApplication id="marketplace-processamento" location="marketplace-processamento.war" contextRoot="/marketplace-processamento"/>
+    <webApplication id="marketplace-notificacao" location="marketplace-notificacao.war" contextRoot="/marketplace-notificacao"/>
+
+    <!-- Configurações do DataSource -->
+    <dataSource id="jdbc/YourDataSource" jndiName="jdbc/YourDataSource">
+        <jdbcDriver id="YourJDBCDriver" libraryRef="YourJDBCLibrary" />
+        <properties>
+            <property name="serverName" value="database"/>
+            <property name="portNumber" value="1433"/>
+            <property name="databaseName" value="yourDatabaseName"/>
+            <property name="user" value="sa"/>
+            <property name="password" value="YourStrong!Passw0rd"/>
+        </properties>
+    </dataSource>
+    
+    <!-- Biblioteca JDBC -->
+    <library id="YourJDBCLibrary">
+        <file name="/opt/ibm/wlp/usr/shared/resources/mssql-jdbc.jar"/>
+    </library>
+
+    <!-- Usuário administrador -->
+    <basicRegistry id="basic" realm="BasicRealm">
+        <user name="admin" password="admin"/>
+    </basicRegistry>
+
+    <!-- Segurança de aplicação -->
+    <applicationSecurity id="appSecurity"/>
+</server>

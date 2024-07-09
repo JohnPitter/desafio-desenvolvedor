@@ -3,9 +3,9 @@
 1. Abrir o powershell
 
 2. Configurar base de dados SQL Server:
-- docker-compose up database
+- docker-compose up -d database
 
-- docker exec -it database /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P YourStrong!Passw0rd
+- docker exec -it database /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'YourStrong!Passw0rd'
 
 - CREATE DATABASE marketplace;
 - GO
