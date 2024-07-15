@@ -8,9 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class MarketPlaceService {
-
     private MarketPlaceRepository marketPlaceRepository;
-
     public Venda cadastrarVenda(Venda venda) {
         return this.marketPlaceRepository.save(venda);
     }
