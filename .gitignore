@@ -9,3 +9,8 @@ Thumbs.db
 # Backup files
 *.bkp
 .$*
+
+# Environment variables
+.env
+.env.local
+.env.production
