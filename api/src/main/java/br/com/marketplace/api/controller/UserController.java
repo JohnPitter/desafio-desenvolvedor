@@ -94,18 +94,13 @@ public class UserController {
     }
 
     @PostMapping("/logout")
-    public JwtResponseDTO LogoutAndDeleteToken(@RequestBody AuthRequestDTO authRequestDTO){
-        Authentication authentication = authenticationManager.
+    public ResponseEntity<String> LogoutAndDeleteToken(@RequestBody AuthRequestDTO authRequestDTO){
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequestDTO.getUsername(), authRequestDTO.getPassword()));
         if(authentication.isAuthenticated()){
-            RefreshToken refreshToken = refreshTokenService.createRefreshToken(authRequestDTO.getUsername());
-            return JwtResponseDTO.builder()
-                    .accessToken(jwtService.GenerateToken(authRequestDTO.getUsername()))
-                    .token(refreshToken.getToken()).build();
-
+            return ResponseEntity.ok("Logged out successfully");
         } else {
             throw new UsernameNotFoundException("invalid user request..!!");
         }
-
     }
 
 
